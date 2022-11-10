@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.email         = '282696845@qq.com'
 
   spec.summary       = 'app自动化'
-  # spec.homepage      = "https://github.com/yaochenfeng/fastlane-plugin-appdevops"
+  spec.homepage      = "https://github.com/yaochenfeng/fastlane-plugin-appdevops"
   spec.license       = "MIT"
 
   spec.files         = Dir["lib/**/*"] + %w(README.md LICENSE)
@@ -17,11 +17,6 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.required_ruby_version = '>= 2.6'
-
-  # Don't add a dependency to fastlane or fastlane_re
-  # since this would cause a circular dependency
-
-  # spec.add_dependency 'your-dependency', '~> 1.0.0'
 
   spec.add_development_dependency('bundler')
   spec.add_development_dependency('fastlane', '>= 2.210.1')

@@ -3,9 +3,16 @@ require_relative '../helper/appdevops_helper'
 
 module Fastlane
   module Actions
+    module SharedValues
+      AUTO_BUILD_DEBUG = :AUTO_BUILD_DEBUG
+    end
     class AppdevopsAction < Action
       def self.run(params)
-        UI.message("The appdevops plugin is working!")
+        isDebug = params[:debug]
+        UI.message("开始自动打#{isDebug ? "开发" : "appstore"}版本ipa并且上传!")
+        Actions.lane_context[SharedValues::AUTO_BUILD_DEBUG] = isDebug
+        other_action.ios_auto_build_ipa
+        other_action.ios_auto_upload
       end
 
       def self.description
@@ -19,6 +26,13 @@ module Fastlane
       def self.return_value
         # If your method provides a return value, you can describe here what it does
       end
+      def self.output
+        # Define the shared values you are going to provide
+        # Example
+        [
+          ['AUTO_BUILD_DEBUG', 'A description of what this value contains']
+        ]
+      end
 
       def self.details
         # Optional:
@@ -27,19 +41,15 @@ module Fastlane
 
       def self.available_options
         [
-          # FastlaneCore::ConfigItem.new(key: :your_option,
-          #                         env_name: "APPDEVOPS_YOUR_OPTION",
-          #                      description: "A description of your option",
-          #                         optional: false,
-          #                             type: String)
+          FastlaneCore::ConfigItem.new(key: :debug,
+            description: "开发模式还是appstore模式",
+            optional: true,
+            default_value: false,
+            is_string: false)
         ]
       end
 
       def self.is_supported?(platform)
-        # Adjust this if your plugin only works for a particular platform (iOS vs. Android, for example)
-        # See: https://docs.fastlane.tools/advanced/#control-configuration-by-lane-and-by-platform
-        #
-        # [:ios, :mac, :android].include?(platform)
         true
       end
     end

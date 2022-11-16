@@ -5,14 +5,14 @@ module Fastlane
 
     class IosAutoUploadAction < Action
       def self.run(params)
-        UI.message "上传app: #{isDebug ? "pgyer" : "testflight"}"
         uploadDebug if isDebug
         uploadBeta unless isDebug
       end
 
       # 上传testflight
       def self.uploadBeta
-        other_action.upload_to_testflight
+        UI.message "没有登录 APP_STORE_CONNECT_API_KEY" unless ENV['APP_STORE_CONNECT_API_KEY']
+        other_action.upload_to_testflight if ENV['APP_STORE_CONNECT_API_KEY']
       end
       # 上传debug
       def self.uploadDebug

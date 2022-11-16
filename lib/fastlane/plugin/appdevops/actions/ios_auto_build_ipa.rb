@@ -28,6 +28,8 @@ module Fastlane
       # 自动同步证书
       def self.autoCode_signing
         ENV['MATCH_READONLY'] = "true" unless ENV['MATCH_READONLY']
+        ENV['MATCH_KEYCHAIN_PASSWORD'] = "123456" unless ENV['MATCH_KEYCHAIN_PASSWORD']
+        
         other_action.sync_code_signing(
           type: isDebug ? "development" : "appstore" ,
           api_key: isDebug ? nil : auto_api_key,

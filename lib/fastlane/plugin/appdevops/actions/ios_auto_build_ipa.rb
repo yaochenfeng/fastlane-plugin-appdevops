@@ -18,7 +18,13 @@ module Fastlane
 
       # 自动增加build号
       def self.autoIncrement
-        other_action.increment_build_number(build_number: other_action.number_of_commits)
+        if isDebug
+          other_action.increment_build_number(build_number: other_action.number_of_commits)
+        else
+          other_action.increment_build_number(
+            build_number: other_action.latest_testflight_build_number(version: other_action.get_version_number) + 1,
+          )
+        end
       end
 
       # 检测pod自动安装
